@@ -5,7 +5,7 @@ FROM node:16.20.0-alpine3.18 AS build
 
 ARG REACT_APP_BACKEND_URL
 
-WORKDIR /three-doctors-frontend
+WORKDIR /frontend
 
 ENV REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL}
 
@@ -25,9 +25,9 @@ RUN npm run build
 FROM nginx:stable-alpine-slim
 
 # copy the updated virtual server configuration to replace the default Nginx configuration
-COPY --from=build /three-doctors-frontend/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /frontend/nginx.conf /etc/nginx/nginx.conf
 
 # copy only the production-related application code from the image built by the previous stage
-COPY --from=build /three-doctors-frontend/dist /usr/share/nginx/html
+COPY --from=build /frontend/dist /usr/share/nginx/html
 
 EXPOSE 5173
