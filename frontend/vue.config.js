@@ -8,7 +8,7 @@ module.exports = {
       .end();
   },
 
-  // devServer: {
-  //   disableHostCheck: true
-  // }
+  devServer: {
+    allowedHosts: "all"
+  }
 };
